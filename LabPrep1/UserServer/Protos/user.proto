@@ -1,0 +1,70 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "UserServer";
+
+package UserServer;
+
+service UserService {
+	rpc GetUser (GetUserRequest) returns (User);
+	rpc GetAllUsers (google.protobuf.Empty) returns (UserListReply);
+	rpc AddUser (AddUserRequest) returns (AddReply);
+	rpc UpdateUser (UpdateUserRequest) returns (UpdateReply);
+	rpc DeleteUser (DeleteUserRequest) returns (google.protobuf.Empty);
+
+	rpc GetUsersInRange (GetUserInRangeRequest) returns (UserListReply);
+	rpc DeleteUsers (DeleteUsersRequest) returns (stream DeleteReply);
+}
+
+message User {
+	string id = 1;
+	string name = 2;
+	string surname = 3;
+	string address = 4;
+	repeated PhoneNumber phoneNumbers = 5; //lista brojeva
+
+	message PhoneNumber {
+		string number = 1;
+	}
+}
+
+message GetUserRequest {
+	int32 id = 1;
+}
+
+message AddUserRequest {
+	User user = 1;
+}
+
+message UpdateUserRequest {
+	User user = 1;
+}
+
+message DeleteUserRequest{
+	string id = 1;
+}
+
+message UserListReply {
+	repeated User users = 1;
+}
+
+message GetUserInRangeRequest {
+	int32 from_id = 1;
+	int32 to_id = 2;
+}
+
+message DeleteUsersRequest {
+	repeated string ids = 1;
+}
+
+message AddReply {
+	string text = 1;
+}
+
+message UpdateReply {
+	string text = 2;
+}
+
+message DeleteReply {
+	string text = 1;
+}
