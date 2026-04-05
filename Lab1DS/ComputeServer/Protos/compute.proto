@@ -1,0 +1,15 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "ComputeServer";
+
+package ComputeServer;
+
+service ComputeService {
+	rpc ComputeUnary (IntNum) returns (google.protobuf.Empty);
+	rpc ComputeStream (stream IntNum) returns (stream IntNum);
+}
+
+message IntNum {
+	int32 num = 1;
+}
