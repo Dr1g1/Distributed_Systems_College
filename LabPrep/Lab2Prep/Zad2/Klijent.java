@@ -9,7 +9,7 @@ public class Klijent {
         String objectName = args[0];
         Scanner scanner = new Scanner(System.in);
 
-        Operater operater; // zasto ovde nije impl nego je interfejs??
+        Operater operater; 
         try {
             operater = (Operater) Naming.lookup("rmi://localhost:1099/" + objectName);
 
@@ -66,7 +66,6 @@ public class Klijent {
             }
             scanner.close();
         }
-        // zasto ovaj redosled???
         catch(MalformedURLException e) {
             e.printStackTrace();
         }
@@ -79,3 +78,15 @@ public class Klijent {
     }
 }
 
+
+/*
+Exception
+├── IOException
+│   ├── RemoteException       ← siri (opstiji)
+│   └── MalformedURLException ← siri (opstiji)
+└── NotBoundException         ← direktno nasljedjuje Exception
+
+MalformedURLException - baca se pre kontaktiranja servera ako je URL neispravan
+RemoteException - baca se tokom komunikacije ako server ne odgovara, pala mreza
+NotBoundException - kad je server dostupan ali objekat nije registrovan pod tim imenom
+*/
